@@ -2,10 +2,10 @@ const express = require('express');
 const bodyParser = require('body-parser');
 const cors = require('cors');
 const axios = require('axios');
-require('dotenv').config({ path: '../.env' }); // 确保路径正确
+require('dotenv').config(); // 确保路径正确
 
 const app = express();
-const port = 5002;
+const port = process.env.PORT || 5002;
 
 app.use(cors());
 app.use(bodyParser.json());
@@ -20,7 +20,7 @@ app.post('/api/ask', async (req, res) => {
         const response = await axios.post(
             'https://api.openai.com/v1/chat/completions',
             {
-                model: 'gpt-4o',
+                model: 'gpt-4',
                 messages: messages,
                 max_tokens: 500,
             },
