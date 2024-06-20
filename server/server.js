@@ -2,17 +2,16 @@ const express = require('express');
 const bodyParser = require('body-parser');
 const cors = require('cors');
 const axios = require('axios');
-const path = require('path');
-require('dotenv').config({ path: path.resolve(__dirname, '../.env') });
+require('dotenv').config({ path: '../.env' }); // 确保路径正确
 
 const app = express();
 const port = process.env.PORT || 5002;
 
-app.use(cors());
+app.use(cors()); // 允许所有来源的跨域请求
 app.use(bodyParser.json());
 
 const openaiApiKey = process.env.OPENAI_API_KEY;
-console.log('OpenAI API Key:', openaiApiKey);  // 打印密钥以确认正确读取
+console.log('OpenAI API Key:', openaiApiKey);
 
 app.post('/api/ask', async (req, res) => {
     const { messages } = req.body;
@@ -35,8 +34,8 @@ app.post('/api/ask', async (req, res) => {
         console.log('API Response:', response.data);
         res.json({ response: response.data.choices[0].message.content.trim() });
     } catch (error) {
-        console.error('Error:', error.response ? error.response.data : error.message);
-        res.status(500).send('Internal Server Error: ' + (error.response ? error.response.data : error.message));
+        console.error('Error:', error.message);
+        res.status(500).send('Internal Server Error: ' + error.message);
     }
 });
 
