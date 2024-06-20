@@ -48,9 +48,9 @@ const Form = styled.form`
 const Input = styled.input`
     width: 100%;
     margin-bottom: 10px;
-    padding: 15px; // 调整输入框内边距
+    padding: 15px;
     border: 1px solid #ccc;
-    border-radius: 25px; // 调整输入框圆角
+    border-radius: 25px;
     background-color: #fff;
     font-size: 1em;
     color: #333;
@@ -59,9 +59,9 @@ const Input = styled.input`
 const Textarea = styled.textarea`
     width: 100%;
     margin-bottom: 10px;
-    padding: 15px; // 调整文本域内边距
+    padding: 15px;
     border: 1px solid #ccc;
-    border-radius: 25px; // 调整文本域圆角
+    border-radius: 25px;
     background-color: #fff;
     font-size: 1em;
     color: #333;
@@ -72,14 +72,14 @@ const Button = styled.button`
     background-color: #a992d4;
     color: white;
     border: none;
-    border-radius: 25px; // 调整按钮圆角
+    border-radius: 25px;
     cursor: pointer;
     font-size: 1em;
     transition: background-color 0.3s, transform 0.3s;
 
     &:hover {
         background-color: #9171ad;
-        transform: scale(1.05); // 添加悬停时的缩放效果
+        transform: scale(1.05);
     }
 `;
 
