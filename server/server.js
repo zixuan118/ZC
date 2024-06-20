@@ -5,18 +5,13 @@ const axios = require('axios');
 require('dotenv').config({ path: '../.env' }); // 确保路径正确
 
 const app = express();
-const port = process.env.PORT || 5002;
+const port = process.env.PORT || 5002; // 使用 Heroku 提供的动态端口
 
 app.use(cors());
 app.use(bodyParser.json());
 
 const openaiApiKey = process.env.OPENAI_API_KEY;
 console.log('OpenAI API Key:', openaiApiKey);  // 打印密钥以确认正确读取
-
-// 根路径处理
-app.get('/', (req, res) => {
-    res.send('Hello, your server is running!');
-});
 
 app.post('/api/ask', async (req, res) => {
     const { messages } = req.body;
@@ -25,7 +20,7 @@ app.post('/api/ask', async (req, res) => {
         const response = await axios.post(
             'https://api.openai.com/v1/chat/completions',
             {
-                model: 'gpt-4',
+                model: 'gpt-4o',
                 messages: messages,
                 max_tokens: 500,
             },
