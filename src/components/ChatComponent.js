@@ -101,7 +101,7 @@ const ChatComponent = () => {
 
     const handleApiRequest = async (currentMessages) => {
         try {
-            const res = await fetch('http://localhost:5002/api/ask', {
+            const res = await fetch('https://zixuan-web.herokuapp.com/api/ask', { // 更新为 Heroku 部署的 URL
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
