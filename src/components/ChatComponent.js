@@ -101,19 +101,19 @@ const ChatComponent = () => {
 
     const handleApiRequest = async (currentMessages) => {
         try {
-            const res = await fetch('https://zixuan-web-e7b7250fbb7c.herokuapp.com/api/ask', {
+            const res = await fetch('https://zixuan-web-e7b7250fbb7c.herokuapp.com/api/ask', { // 更新为 Heroku 部署的 URL
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
                 },
                 body: JSON.stringify({ messages: currentMessages }),
             });
-    
+
             if (!res.ok) {
                 const errorText = await res.text();
                 throw new Error(`HTTP error! status: ${res.status}, message: ${errorText}`);
             }
-    
+
             const data = await res.json();
             const updatedMessages = [...currentMessages, { role: 'assistant', content: data.response }];
             setMessages(updatedMessages);
@@ -121,7 +121,6 @@ const ChatComponent = () => {
             console.error('Fetch error:', error.message);
         }
     };
-    
 
     return (
         <Container>
