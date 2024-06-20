@@ -110,8 +110,8 @@ const Gallery = () => {
             <Title>Gallery</Title>
             <ImagesGrid>
                 {images.map((src, index) => (
-                    <ImageWrapper key={index} onClick={() => openModal(<img src={src} alt="Gallery image" />)}>
-                        <Image src={src} alt="Gallery image" />
+                    <ImageWrapper key={index} onClick={() => openModal(<img src={src} alt={`Gallery ${index + 1}`} />)}>
+                        <Image src={src} alt={`Gallery ${index + 1}`} />
                     </ImageWrapper>
                 ))}
             </ImagesGrid>
