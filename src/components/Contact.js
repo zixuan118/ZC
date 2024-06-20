@@ -84,8 +84,6 @@ const Button = styled.button`
 `;
 
 const Contact = () => {
-    const { t } = useTranslation();
-
     return (
         <ContactContainer
             id="contact"
