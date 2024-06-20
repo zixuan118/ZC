@@ -2,10 +2,11 @@ const express = require('express');
 const bodyParser = require('body-parser');
 const cors = require('cors');
 const axios = require('axios');
-require('dotenv').config({ path: '../.env' }); // 确保路径正确
+const path = require('path');
+require('dotenv').config({ path: path.resolve(__dirname, '../.env') });
 
 const app = express();
-const port = process.env.PORT || 5002; // 使用 Heroku 提供的动态端口
+const port = process.env.PORT || 5002;
 
 app.use(cors());
 app.use(bodyParser.json());
@@ -34,8 +35,8 @@ app.post('/api/ask', async (req, res) => {
         console.log('API Response:', response.data);
         res.json({ response: response.data.choices[0].message.content.trim() });
     } catch (error) {
-        console.error('Error:', error.message);
-        res.status(500).send('Internal Server Error: ' + error.message);
+        console.error('Error:', error.response ? error.response.data : error.message);
+        res.status(500).send('Internal Server Error: ' + (error.response ? error.response.data : error.message));
     }
 });
 
