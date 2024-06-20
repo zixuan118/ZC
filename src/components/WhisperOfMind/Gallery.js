@@ -42,7 +42,7 @@ const VideoWrapper = styled.div`
 `;
 
 const Video = styled.video`
-    width: 50%; /* 调整视频框的大小 */
+    width: 50%;
     border-radius: 10px;
 `;
 
@@ -81,9 +81,9 @@ const Gallery = () => {
     const [modalContent, setModalContent] = useState(null);
 
     const images = [
-        `${process.env.PUBLIC_URL}/images/R0001149 2.JPG`,
-        `${process.env.PUBLIC_URL}/images/R0001374 2.JPG`,
-        `${process.env.PUBLIC_URL}/images/R0001153 2.JPG`,
+        '/images/R0001149 2.JPG',
+        '/images/R0001374 2.JPG',
+        '/images/R0001153 2.JPG',
     ];
 
     const openModal = (content) => {
@@ -110,14 +110,14 @@ const Gallery = () => {
             <Title>Gallery</Title>
             <ImagesGrid>
                 {images.map((src, index) => (
-                    <ImageWrapper key={index} onClick={() => openModal(<img src={src} alt={`Image ${index + 1}`} />)}>
-                        <Image src={src} alt={`Image ${index + 1}`} />
+                    <ImageWrapper key={index} onClick={() => openModal(<img src={src} alt={`Gallery image`} />)}>
+                        <Image src={src} alt={`Gallery image`} />
                     </ImageWrapper>
                 ))}
             </ImagesGrid>
             <VideoWrapper>
                 <Video controls>
-                    <source src={`${process.env.PUBLIC_URL}/videos/Apple_Nov15_ZC.MP4`} type="video/mp4" />
+                    <source src="/videos/Apple_Nov15_ZC.MP4" type="video/mp4" />
                     Your browser does not support the video tag.
                 </Video>
             </VideoWrapper>
