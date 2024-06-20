@@ -2,16 +2,16 @@ const express = require('express');
 const bodyParser = require('body-parser');
 const cors = require('cors');
 const axios = require('axios');
-require('dotenv').config(); // 确保路径正确
+require('dotenv').config({ path: '../.env' });
 
 const app = express();
-const port = process.env.PORT || 5002;
+const port = process.env.PORT || 5002; // 使用 Heroku 提供的端口
 
 app.use(cors());
 app.use(bodyParser.json());
 
 const openaiApiKey = process.env.OPENAI_API_KEY;
-console.log('OpenAI API Key:', openaiApiKey);  // 打印密钥以确认正确读取
+console.log('OpenAI API Key:', openaiApiKey);
 
 app.post('/api/ask', async (req, res) => {
     const { messages } = req.body;
@@ -34,7 +34,7 @@ app.post('/api/ask', async (req, res) => {
         console.log('API Response:', response.data);
         res.json({ response: response.data.choices[0].message.content.trim() });
     } catch (error) {
-        console.error('Error:', error.message);
+        console.error('Error:', error);
         res.status(500).send('Internal Server Error: ' + error.message);
     }
 });
