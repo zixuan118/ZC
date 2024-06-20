@@ -20,7 +20,7 @@ app.post('/api/ask', async (req, res) => {
         const response = await axios.post(
             'https://api.openai.com/v1/chat/completions',
             {
-                model: 'gpt-4o',
+                model: 'gpt-4o', 
                 messages: messages,
                 max_tokens: 500,
             },
@@ -35,7 +35,12 @@ app.post('/api/ask', async (req, res) => {
         res.json({ response: response.data.choices[0].message.content.trim() });
     } catch (error) {
         console.error('Error:', error.message);
-        res.status(500).send('Internal Server Error: ' + error.message);
+        if (error.response) {
+            console.error('Error details:', error.response.data);
+            res.status(error.response.status).send('Error from OpenAI API: ' + error.response.data.error.message);
+        } else {
+            res.status(500).send('Internal Server Error: ' + error.message);
+        }
     }
 });
 
