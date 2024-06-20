@@ -1,0 +1,19 @@
+{
+    "home": "主页",
+    "about": "关于我",
+    "whisper": "Whisper of Mind",
+    "contact": "联系",
+    "home.welcome": "欢迎来到我的网站",
+    "home.intro": "这是主页的介绍文字。",
+    "about.title": "关于我",
+    "about.placeholder": "输入信息",
+    "about.send": "发送",
+    "whisper.title": "Whisper of Mind",
+    "whisper.love": "Love",
+    "whisper.archivedMemory": "Archived Memory",
+    "contact.title": "联系",
+    "contact.name": "姓名",
+    "contact.email": "电子邮件",
+    "contact.message": "信息",
+    "contact.send": "发送"
+}

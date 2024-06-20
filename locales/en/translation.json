@@ -1,0 +1,19 @@
+{
+    "home": "Home",
+    "about": "About Me",
+    "whisper": "Whisper of Mind",
+    "contact": "Contact",
+    "home.welcome": "Welcome to My Website",
+    "home.intro": "This is the introduction text for the home page.",
+    "about.title": "About Me",
+    "about.placeholder": "Type a message",
+    "about.send": "Send",
+    "whisper.title": "Whisper of Mind",
+    "whisper.love": "Love",
+    "whisper.archivedMemory": "Archived Memory",
+    "contact.title": "Contact",
+    "contact.name": "Name",
+    "contact.email": "Email",
+    "contact.message": "Message",
+    "contact.send": "Send"
+}
