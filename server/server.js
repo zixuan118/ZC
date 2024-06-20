@@ -13,6 +13,11 @@ app.use(bodyParser.json());
 const openaiApiKey = process.env.OPENAI_API_KEY;
 console.log('OpenAI API Key:', openaiApiKey);
 
+// 添加根路径处理
+app.get('/', (req, res) => {
+    res.send('Hello, this is the root path of your application!');
+});
+
 app.post('/api/ask', async (req, res) => {
     const { messages } = req.body;
     try {
@@ -20,7 +25,7 @@ app.post('/api/ask', async (req, res) => {
         const response = await axios.post(
             'https://api.openai.com/v1/chat/completions',
             {
-                model: 'gpt-4o', 
+                model: 'gpt-4o',
                 messages: messages,
                 max_tokens: 500,
             },
