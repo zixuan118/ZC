@@ -102,7 +102,7 @@ const Contact = () => {
         e.preventDefault();
 
         emailjs.send(
-            'service_ho9bnhb', // 服务ID
+            'service_m7gliw8', // 服务ID
             'template_39g9qf9', // 模板ID
             {
                 from_name: formData.from_name,
