@@ -59,7 +59,7 @@ const NavLink = styled(RouterNavLink)`
     text-decoration: none;
     color: #fff;
     font-size: 1em;
-    text-transform: uppercase; /* 将文字变为全大写 */
+    text-transform: uppercase; 
 
     &.active {
         font-weight: bold;
@@ -100,7 +100,7 @@ const MenuButton = styled.div`
     display: flex;
     flex-direction: column;
     cursor: pointer;
-    margin-right: 20px; /* 将按钮向左移动 */
+    margin-right: 30px; /* 将按钮向左移动 */
 
     div {
         width: 25px;
