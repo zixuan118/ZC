@@ -100,7 +100,7 @@ const MenuButton = styled.div`
     display: flex;
     flex-direction: column;
     cursor: pointer;
-    margin-right: 30px; /* 将按钮向左移动 */
+    margin-right: 50px; /* 将按钮向左移动 */
 
     div {
         width: 25px;
