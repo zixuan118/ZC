@@ -51,7 +51,7 @@ const NavItem = styled.li`
     @media (max-width: 768px) {
         width: 100%;
         text-align: center;
-        padding: 10px 0;
+        padding: 15px 0;
     }
 `;
 
@@ -59,6 +59,7 @@ const NavLink = styled(RouterNavLink)`
     text-decoration: none;
     color: #fff;
     font-size: 1em;
+    text-transform: uppercase; /* 将文字变为全大写 */
 
     &.active {
         font-weight: bold;
@@ -73,16 +74,17 @@ const NavLink = styled(RouterNavLink)`
 const LanguageSwitcher = styled.div`
     display: flex;
     gap: 10px;
-    margin-right: 40px;
+    margin-top: -10px; /* 向上移动 */
+    margin-bottom: 10px;
 
     @media (max-width: 768px) {
-        margin-right: 0;
-        margin-top: 10px;
+        justify-content: center;
+        width: 100%;
     }
 `;
 
 const LanguageButton = styled.button`
-    padding: 5px 10px;
+    padding: 10px 20px;
     background-color: #444;
     color: white;
     border: none;
@@ -95,13 +97,9 @@ const LanguageButton = styled.button`
 `;
 
 const MenuButton = styled.div`
-    display: none;
+    display: flex;
     flex-direction: column;
     cursor: pointer;
-
-    @media (max-width: 768px) {
-        display: flex;
-    }
 
     div {
         width: 25px;
