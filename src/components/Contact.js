@@ -1,6 +1,7 @@
-import React from 'react';
+import React, { useState } from 'react';
 import styled from 'styled-components';
 import { motion } from 'framer-motion';
+import emailjs from 'emailjs-com';
 
 const ContactContainer = styled(motion.div)`
     display: flex;
@@ -83,6 +84,42 @@ const Button = styled.button`
 `;
 
 const Contact = () => {
+    const [formData, setFormData] = useState({
+        from_name: '',
+        to_name: 'Adrian', // 接收消息的名字
+        message: '',
+        email: ''
+    });
+
+    const handleChange = (e) => {
+        setFormData({
+            ...formData,
+            [e.target.name]: e.target.value
+        });
+    };
+
+    const handleSubmit = (e) => {
+        e.preventDefault();
+
+        emailjs.send(
+            'service_ho9bnhb', // 服务ID
+            'template_39g9qf9', // 模板ID
+            {
+                from_name: formData.from_name,
+                to_name: formData.to_name,
+                message: formData.message,
+                reply_to: formData.email
+            },
+            '0Jfh298vRlR8UqhmJ' // Public Key
+        ).then((response) => {
+            console.log('SUCCESS!', response.status, response.text);
+            alert('Message sent successfully!');
+        }).catch((error) => {
+            console.log('FAILED...', error);
+            alert('Message failed to send.');
+        });
+    };
+
     return (
         <ContactContainer
             id="contact"
@@ -99,10 +136,27 @@ const Contact = () => {
             </Title>
             <FormSection>
                 <Subtitle>Get in Touch!</Subtitle>
-                <Form>
-                    <Input type="text" placeholder="Name" />
-                    <Input type="email" placeholder="Email*" />
-                    <Textarea placeholder="Message" />
+                <Form onSubmit={handleSubmit}>
+                    <Input
+                        type="text"
+                        name="from_name"
+                        placeholder="Name"
+                        value={formData.from_name}
+                        onChange={handleChange}
+                    />
+                    <Input
+                        type="email"
+                        name="email"
+                        placeholder="Email*"
+                        value={formData.email}
+                        onChange={handleChange}
+                    />
+                    <Textarea
+                        name="message"
+                        placeholder="Message"
+                        value={formData.message}
+                        onChange={handleChange}
+                    />
                     <Button type="submit">— SEND —</Button>
                 </Form>
             </FormSection>
