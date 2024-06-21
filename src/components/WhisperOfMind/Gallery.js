@@ -81,9 +81,9 @@ const Gallery = () => {
     const [modalContent, setModalContent] = useState(null);
 
     const images = [
-        '/images/R0001149 2.JPG',
-        '/images/R0001374 2.JPG',
-        '/images/R0001153 2.JPG',
+        `${process.env.PUBLIC_URL}/images/R0001149 2.JPG`,
+        `${process.env.PUBLIC_URL}/images/R0001374 2.JPG`,
+        `${process.env.PUBLIC_URL}/images/R0001153 2.JPG`,
     ];
 
     const openModal = (content) => {
@@ -117,7 +117,7 @@ const Gallery = () => {
             </ImagesGrid>
             <VideoWrapper>
                 <Video controls>
-                    <source src="/videos/Apple_Nov15_ZC.MP4" type="video/mp4" />
+                    <source src={`${process.env.PUBLIC_URL}/videos/Apple_Nov15_ZC.MP4`} type="video/mp4" />
                     Your browser does not support the video tag.
                 </Video>
             </VideoWrapper>
