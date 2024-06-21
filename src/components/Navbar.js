@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { NavLink as RouterNavLink } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import styled from 'styled-components';
@@ -12,7 +12,7 @@ const NavbarContainer = styled.div`
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding: 15px 20px; // 调整 padding 增加高度
+    padding: 15px 20px;
     z-index: 1000;
 `;
 
@@ -30,9 +30,20 @@ const Logo = styled(RouterNavLink)`
 const NavList = styled.ul`
     list-style: none;
     display: flex;
-    gap: 30px; // 增加间距
+    gap: 30px;
     margin: 0;
     padding: 0;
+
+    @media (max-width: 768px) {
+        flex-direction: column;
+        align-items: center;
+        position: absolute;
+        top: 60px;
+        left: 0;
+        width: 100%;
+        background-color: rgba(0, 0, 0, 0.9);
+        display: ${props => (props.open ? 'flex' : 'none')};
+    }
 `;
 
 const NavItem = styled.li``;
@@ -55,12 +66,16 @@ const NavLink = styled(RouterNavLink)`
 const LanguageSwitcher = styled.div`
     display: flex;
     gap: 10px;
-    margin-right: 40px; // 将按钮往左边移动
+    margin-right: 40px;
+
+    @media (max-width: 768px) {
+        margin-right: 0;
+    }
 `;
 
 const LanguageButton = styled.button`
     padding: 5px 10px;
-    background-color: #444; // 更和谐的底色
+    background-color: #444;
     color: white;
     border: none;
     border-radius: 5px;
@@ -71,28 +86,55 @@ const LanguageButton = styled.button`
     }
 `;
 
+const MenuButton = styled.div`
+    display: none;
+    flex-direction: column;
+    cursor: pointer;
+
+    @media (max-width: 768px) {
+        display: flex;
+    }
+
+    div {
+        width: 25px;
+        height: 3px;
+        background-color: white;
+        margin: 4px 0;
+    }
+`;
+
 const Navbar = () => {
     const { t, i18n } = useTranslation();
+    const [menuOpen, setMenuOpen] = useState(false);
 
     const changeLanguage = (lng) => {
         i18n.changeLanguage(lng);
     };
 
+    const toggleMenu = () => {
+        setMenuOpen(!menuOpen);
+    };
+
     return (
         <NavbarContainer>
             <Logo to="/">ZIXUAN</Logo>
-            <NavList>
+            <MenuButton onClick={toggleMenu}>
+                <div></div>
+                <div></div>
+                <div></div>
+            </MenuButton>
+            <NavList open={menuOpen}>
                 <NavItem>
-                    <NavLink to="/">{t('home')}</NavLink>
+                    <NavLink to="/" onClick={toggleMenu}>{t('home')}</NavLink>
                 </NavItem>
                 <NavItem>
-                    <NavLink to="/about">{t('about')}</NavLink>
+                    <NavLink to="/about" onClick={toggleMenu}>{t('about')}</NavLink>
                 </NavItem>
                 <NavItem>
-                    <NavLink to="/whisper-of-mind">{t('whisper')}</NavLink>
+                    <NavLink to="/whisper-of-mind" onClick={toggleMenu}>{t('whisper')}</NavLink>
                 </NavItem>
                 <NavItem>
-                    <NavLink to="/contact">{t('contact')}</NavLink>
+                    <NavLink to="/contact" onClick={toggleMenu}>{t('contact')}</NavLink>
                 </NavItem>
             </NavList>
             <LanguageSwitcher>
