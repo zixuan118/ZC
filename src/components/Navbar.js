@@ -43,10 +43,17 @@ const NavList = styled.ul`
         width: 100%;
         background-color: rgba(0, 0, 0, 0.9);
         display: ${props => (props.open ? 'flex' : 'none')};
+        padding-top: 20px;
     }
 `;
 
-const NavItem = styled.li``;
+const NavItem = styled.li`
+    @media (max-width: 768px) {
+        width: 100%;
+        text-align: center;
+        padding: 10px 0;
+    }
+`;
 
 const NavLink = styled(RouterNavLink)`
     text-decoration: none;
@@ -70,6 +77,7 @@ const LanguageSwitcher = styled.div`
 
     @media (max-width: 768px) {
         margin-right: 0;
+        margin-top: 10px;
     }
 `;
 
@@ -100,6 +108,19 @@ const MenuButton = styled.div`
         height: 3px;
         background-color: white;
         margin: 4px 0;
+        transition: transform 0.3s, opacity 0.3s;
+    }
+
+    &.open div:nth-child(1) {
+        transform: translateY(7px) rotate(45deg);
+    }
+
+    &.open div:nth-child(2) {
+        opacity: 0;
+    }
+
+    &.open div:nth-child(3) {
+        transform: translateY(-7px) rotate(-45deg);
     }
 `;
 
@@ -118,7 +139,7 @@ const Navbar = () => {
     return (
         <NavbarContainer>
             <Logo to="/">ZIXUAN</Logo>
-            <MenuButton onClick={toggleMenu}>
+            <MenuButton onClick={toggleMenu} className={menuOpen ? 'open' : ''}>
                 <div></div>
                 <div></div>
                 <div></div>
@@ -136,11 +157,11 @@ const Navbar = () => {
                 <NavItem>
                     <NavLink to="/contact" onClick={toggleMenu}>{t('contact')}</NavLink>
                 </NavItem>
+                <LanguageSwitcher>
+                    <LanguageButton onClick={() => changeLanguage('en')}>English</LanguageButton>
+                    <LanguageButton onClick={() => changeLanguage('zh')}>中文</LanguageButton>
+                </LanguageSwitcher>
             </NavList>
-            <LanguageSwitcher>
-                <LanguageButton onClick={() => changeLanguage('en')}>English</LanguageButton>
-                <LanguageButton onClick={() => changeLanguage('zh')}>中文</LanguageButton>
-            </LanguageSwitcher>
         </NavbarContainer>
     );
 };
