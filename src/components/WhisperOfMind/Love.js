@@ -1,6 +1,9 @@
-import React from 'react';
+import React, { useState } from 'react';
 import styled from 'styled-components';
 import { motion } from 'framer-motion';
+
+// 设置密码
+const CORRECT_PASSWORD = '723&118'; 
 
 const LoveContainer = styled(motion.div)`
     display: flex;
@@ -80,7 +83,51 @@ const Image = styled.img`
     cursor: pointer;
 `;
 
+const PasswordInput = styled.input`
+    padding: 10px 20px;  /* Reduced padding */
+    margin-bottom: 20px;
+    border: 2px solid #ccc;
+    border-radius: 30px;  /* Still elliptical, but smaller */
+    font-size: 1em;  /* Reduced font size */
+    outline: none;
+    width: 200px;  /* Smaller width */
+    text-align: center;
+    transition: border-color 0.3s;
+
+    &:focus {
+        border-color: #a992d4;  /* Focused border color */
+    }
+`;
+
+const SubmitButton = styled.button`
+    padding: 10px 20px;  /* Reduced padding */
+    background-color: #a992d4;
+    color: white;
+    border: none;
+    border-radius: 30px; /* Smaller elliptical border */
+    font-size: 1em;  /* Reduced font size */
+    cursor: pointer;
+    transition: background-color 0.3s, transform 0.3s;
+
+    &:hover {
+        background-color: #9171ad;
+        transform: scale(1.05);  /* Hover scaling effect */
+    }
+`;
+
+
+const ErrorMessage = styled.p`
+    color: #db5cba; 
+    font-size: 1em;
+    margin-top: 10px;
+`;
+
 const Love = () => {
+
+    const [inputPassword, setInputPassword] = useState('');
+    const [isAuthorized, setIsAuthorized] = useState(false);
+    const [errorMessage, setErrorMessage] = useState('');
+
     const timelineData = [
         {
             date: '2023-10-02',
@@ -182,6 +229,15 @@ const Love = () => {
         }
     ];
 
+    // 密码验证逻辑
+    const handlePasswordSubmit = () => {
+        if (inputPassword === CORRECT_PASSWORD) {
+            setIsAuthorized(true); // 密码正确，显示内容
+        } else {
+            setErrorMessage("Oops! That's not quite right."); 
+        }
+    };
+
     return (
         <LoveContainer
             initial={{ opacity: 0 }}
@@ -195,27 +251,43 @@ const Love = () => {
             >
                 Love
             </Title>
-            <Timeline>
-                {timelineData.map((item, index) => (
-                    <TimelineItem key={index}>
-                        <Date
-                            initial={{ opacity: 0 }}
-                            animate={{ opacity: 1 }}
-                            transition={{ duration: 1, delay: 0.5 * index }}
-                        >
-                            {item.date}
-                        </Date>
-                        <Content
-                            initial={{ opacity: 0 }}
-                            animate={{ opacity: 1 }}
-                            transition={{ duration: 1, delay: 0.5 * index }}
-                        >
-                            {item.content}
-                            {item.image && <Image src={item.image} alt={item.date} />}
-                        </Content>
-                    </TimelineItem>
-                ))}
-            </Timeline>
+
+            {/* 如果用户已通过验证，显示内容 */}
+            {isAuthorized ? (
+                <Timeline>
+                    {timelineData.map((item, index) => (
+                        <TimelineItem key={index}>
+                            <Date
+                                initial={{ opacity: 0 }}
+                                animate={{ opacity: 1 }}
+                                transition={{ duration: 1, delay: 0.5 * index }}
+                            >
+                                {item.date}
+                            </Date>
+                            <Content
+                                initial={{ opacity: 0 }}
+                                animate={{ opacity: 1 }}
+                                transition={{ duration: 1, delay: 0.5 * index }}
+                            >
+                                {item.content}
+                                {item.image && <Image src={item.image} alt={item.date} />}
+                            </Content>
+                        </TimelineItem>
+                    ))}
+                </Timeline>
+            ) : (
+                // 如果未通过验证，显示密码输入框
+                <>
+                    <PasswordInput
+                        type="password"
+                        placeholder="Enter password"
+                        value={inputPassword}
+                        onChange={(e) => setInputPassword(e.target.value)}
+                    />
+                    <SubmitButton onClick={handlePasswordSubmit}>Submit</SubmitButton>
+                    {errorMessage && <ErrorMessage>{errorMessage}</ErrorMessage>}
+                </>
+            )}
         </LoveContainer>
     );
 };
