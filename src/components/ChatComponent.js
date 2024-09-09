@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import styled from 'styled-components';
+import { findAnswer } from './ZixuanDatabase';
 import { useLocation } from 'react-router-dom';
 
 const Container = styled.div`
@@ -11,12 +12,12 @@ const Container = styled.div`
 
 const ChatBox = styled.div`
     width: 90%;
-    max-width: 800px; // 调整最大宽度以适应更大屏幕
+    max-width: 800px;
     margin: 20px auto;
     background-color: white;
-    border-radius: 25px; // 调整边框圆角
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); // 添加阴影
-    padding: 30px; // 增加内边距
+    border-radius: 25px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    padding: 30px;
     text-align: left;
 `;
 
@@ -26,33 +27,6 @@ const Message = styled.div`
     background-color: #f5f5f5;
     border-radius: 15px;
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-`;
-
-const Input = styled.input`
-    width: calc(100% - 24px);
-    padding: 15px; // 调整内边距
-    margin: 10px 0;
-    border: 1px solid #ccc;
-    border-radius: 25px; // 调整边框圆角
-    background-color: #fff; // 保持背景色一致
-    font-size: 1.1em; // 调整字体大小
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-`;
-
-const Button = styled.button`
-    padding: 10px 20px; // 调整按钮大小
-    background-color: #a992d4; // 保持一致的背景色
-    color: white;
-    border: none;
-    border-radius: 25px; // 调整边框圆角
-    cursor: pointer;
-    font-size: 1em;
-    transition: background-color 0.3s, transform 0.3s;
-
-    &:hover {
-        background-color: #9171ad;
-        transform: scale(1.05); // 添加悬停时的缩放效果
-    }
 `;
 
 const TypingEffect = ({ message }) => {
@@ -74,76 +48,34 @@ const TypingEffect = ({ message }) => {
     return <span>{displayedText}</span>;
 };
 
-const ChatComponent = () => {
+const ChatZixuan = () => {
     const location = useLocation();
     const [messages, setMessages] = useState([]);
-    const [input, setInput] = useState('');
+    const query = location.state?.query || '';
 
     useEffect(() => {
-        if (location.state?.initialQuery) {
-            const initialMessages = [{ role: 'user', content: location.state.initialQuery }];
-            setMessages(initialMessages);
-            handleApiRequest(initialMessages);
+        if (query) {
+            const answer = findAnswer(query);
+            const newMessages = [
+                { role: 'user', content: query },
+                { role: 'zixuan', content: answer || '抱歉，我找不到这个问题的答案。' },
+            ];
+            setMessages(newMessages);
         }
-    }, [location.state]);
-
-    const handleInputChange = (e) => {
-        setInput(e.target.value);
-    };
-
-    const handleFormSubmit = async (e) => {
-        e.preventDefault();
-        const newMessages = [...messages, { role: 'user', content: input }];
-        setMessages(newMessages);
-        handleApiRequest(newMessages);
-        setInput('');
-    };
-
-    const handleApiRequest = async (currentMessages) => {
-        try {
-            const res = await fetch('https://zixuan-web-e7b7250fbb7c.herokuapp.com/api/ask', { // 更新为 Heroku 部署的 URL
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-                body: JSON.stringify({ messages: currentMessages }),
-            });
-    
-            if (!res.ok) {
-                throw new Error(`HTTP error! status: ${res.status}`);
-            }
-    
-            const data = await res.json();
-            const updatedMessages = [...currentMessages, { role: 'assistant', content: data.response }];
-            setMessages(updatedMessages);
-        } catch (error) {
-            console.error('Fetch error:', error.message);
-            console.error('Fetch error details:', error);
-        }
-    };
-    
+    }, [query]);
 
     return (
         <Container>
             <ChatBox>
                 {messages.map((msg, index) => (
                     <Message key={index}>
-                        <strong>{msg.role === 'user' ? 'You: ' : 'ZX: '}</strong>
-                        {msg.role === 'assistant' ? <TypingEffect message={msg.content} /> : msg.content}
+                        <strong>{msg.role === 'user' ? 'You: ' : 'Zixuan: '}</strong>
+                        <TypingEffect message={msg.content} />
                     </Message>
                 ))}
-                <form onSubmit={handleFormSubmit}>
-                    <Input
-                        type="text"
-                        value={input}
-                        onChange={handleInputChange}
-                        placeholder="Type your message..."
-                    />
-                    <Button type="submit">Send</Button>
-                </form>
             </ChatBox>
         </Container>
     );
 };
 
-export default ChatComponent;
+export default ChatZixuan;

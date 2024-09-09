@@ -10,6 +10,8 @@ import Contact from './components/Contact';
 import Navbar from './components/Navbar';
 import Footer from './components/Footer';
 import ChatComponent from './components/ChatComponent';
+import ChatZixuan from './components/ChatZixuan';
+import ChatAI from './components/ChatAI';
 import './App.css';
 
 function App() {
@@ -26,6 +28,8 @@ function App() {
                     <Route path="/whisper-of-mind/archived-memory" element={<ArchivedMemory />} />
                     <Route path="/contact" element={<Contact />} />
                     <Route path="/chat" element={<ChatComponent />} />
+                    <Route path="/chat-zixuan" element={<ChatZixuan />} />
+                    <Route path="/chat-ai" element={<ChatAI />} />
                 </Routes>
                 <Footer />
             </div>

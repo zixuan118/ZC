@@ -8,8 +8,8 @@ const AboutContainer = styled(motion.div)`
     text-align: center;
     background: linear-gradient(135deg, #c3b6d8 0%, #e2dfe2 100%);
     min-height: 100vh;
-    width: 100%; // 确保覆盖整个宽度
-    box-sizing: border-box; // 确保内边距和边框被包含在总宽度内
+    width: 100%;
+    box-sizing: border-box;
 `;
 
 const Title = styled(motion.h2)`
@@ -32,36 +32,43 @@ const Form = styled(motion.form)`
 `;
 
 const Input = styled.input`
-    width: 90%; // 调整宽度
-    max-width: 600px; // 调整最大宽度
-    margin-bottom: 20px; // 调整底部间距
-    padding: 15px; // 调整内边距
+    width: 90%;
+    max-width: 600px;
+    margin-bottom: 20px;
+    padding: 15px;
     border: 1px solid #ccc;
-    border-radius: 25px; // 调整边框圆角
+    border-radius: 25px;
     background-color: #fff;
-    font-size: 1.2em; // 调整字体大小
+    font-size: 1.2em;
     color: #333;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); // 添加阴影
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
     transition: box-shadow 0.3s;
 
     &:focus {
-        box-shadow: 0 8px 12px rgba(0, 0, 0, 0.2); // 调整聚焦时的阴影
+        box-shadow: 0 8px 12px rgba(0, 0, 0, 0.2);
     }
 `;
 
+const ButtonContainer = styled.div`
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+    margin-top: 20px;
+`;
+
 const Button = styled.button`
-    padding: 10px 20px; // 调整按钮大小
+    padding: 10px 20px;
     background-color: #a992d4;
     color: white;
     border: none;
-    border-radius: 25px; // 调整按钮圆角
+    border-radius: 25px;
     cursor: pointer;
-    font-size: 1em; // 调整按钮字体大小
+    font-size: 1em;
     transition: background-color 0.3s, transform 0.3s;
 
     &:hover {
         background-color: #9171ad;
-        transform: scale(1.05); // 添加悬停时的缩放效果
+        transform: scale(1.05);
     }
 `;
 
@@ -73,9 +80,19 @@ const About = () => {
         setInput(e.target.value);
     };
 
-    const handleFormSubmit = (e) => {
-        e.preventDefault();
-        navigate('/chat', { state: { initialQuery: input } });
+    const handleZixuanClick = () => {
+        navigate('/chat-zixuan', { state: { query: input.trim() } }); // 传递输入内容（允许为空）
+    };
+
+    const handleSubmitClick = () => {
+        navigate('/chat-ai', { state: { query: input.trim() } }); // 传递输入内容（允许为空）
+    };
+
+    const handleKeyPress = (e) => {
+        if (e.key === 'Enter') {
+            e.preventDefault(); // 防止表单的默认提交行为
+            handleSubmitClick(); // 回车时默认触发 Submit（OpenAI）
+        }
     };
 
     return (
@@ -102,15 +119,18 @@ const About = () => {
                 initial={{ opacity: 0 }}
                 animate={{ opacity: 1 }}
                 transition={{ duration: 1, delay: 1.5 }}
-                onSubmit={handleFormSubmit}
             >
                 <Input
                     type="text"
                     value={input}
                     onChange={handleInputChange}
                     placeholder="Ask me anything..."
+                    onKeyPress={handleKeyPress} // 监听回车键事件
                 />
-                <Button type="submit">Submit</Button>
+                <ButtonContainer>
+                    <Button onClick={handleZixuanClick}>About Zixuan</Button> {/* 子炫模式按钮 */}
+                    <Button onClick={handleSubmitClick}>Chat AI</Button> {/* OpenAI模式按钮 */}
+                </ButtonContainer>
             </Form>
         </AboutContainer>
     );
